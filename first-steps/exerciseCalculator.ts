@@ -22,7 +22,9 @@ const getRatingDescription = (target: number, rating: number) => {
   return "you crushed the target";
 };
 
-const calculateExercises = (input: number[]): ExerciseCalculationResult => {
+export const calculateExercises = (
+  input: number[]
+): ExerciseCalculationResult => {
   const target = input[0];
   const exerciseHours = input.slice(1);
   const periodLength = exerciseHours.length;
@@ -44,11 +46,13 @@ const calculateExercises = (input: number[]): ExerciseCalculationResult => {
   };
 };
 
-try {
-  const args = getNumberArgs();
-  console.log(calculateExercises(args));
-} catch (e: unknown) {
-  if (e instanceof Error) {
-    console.error(e.message);
+if (require.main === module) {
+  try {
+    const args = getNumberArgs();
+    console.log(calculateExercises(args));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      console.error(e.message);
+    }
   }
 }

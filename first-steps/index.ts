@@ -1,6 +1,9 @@
 import express from "express";
 import { calculateBmi } from "./bmiCalculator";
+import { calculateExercises } from "./exerciseCalculator";
 const app = express();
+
+app.use(express.json());
 
 app.get("/hello", (_req, res) => {
   res.send("Hello Full Stack");
@@ -31,6 +34,30 @@ app.get("/bmi", (req, res) => {
     weight,
     bmi: calculateBmi({ height: Number(height), weight: Number(weight) }),
   });
+});
+
+app.post("/exercises", (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const {
+    daily_exercises,
+    target,
+  }: { daily_exercises: number[]; target: number } = req.body;
+
+  if (!daily_exercises || !daily_exercises.length) {
+    return res.status(400).send("Daily exercises cannot be empty!");
+  }
+
+  const numberExercises = daily_exercises.map(Number);
+
+  if (numberExercises.some(isNaN)) {
+    return res.status(400).send("Daily exercises have to be numbers!");
+  }
+
+  if (isNaN(Number(target))) {
+    return res.status(400).send("Target has to be a number!");
+  }
+
+  return res.send(calculateExercises([target].concat(numberExercises)));
 });
 
 const PORT = 3003;
