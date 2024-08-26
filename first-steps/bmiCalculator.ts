@@ -1,21 +1,34 @@
-type BMIResult = "Underweight" | "Normal range" | "Overweight" | "Obese"
+import { getNumberArgs } from "./utils";
 
-const calculateBmi = (height: number, mass: number) : BMIResult => {
-    const bmi = mass / Math.pow(height / 100, 2)
+type BMIResult = "Underweight" | "Normal range" | "Overweight" | "Obese";
+type BMIArgs = {
+  height: number;
+  mass: number;
+};
 
-    if (bmi < 18.5) {
-        return "Underweight"
-    }
+const calculateBmi = ({ height, mass }: BMIArgs): BMIResult => {
+  const bmi = mass / Math.pow(height / 100, 2);
 
-    if (bmi < 23) {
-        return "Normal range"
-    }
+  if (bmi < 18.5) {
+    return "Underweight";
+  }
 
-    if (bmi < 27.5) {
-        return "Overweight"
-    }
+  if (bmi < 23) {
+    return "Normal range";
+  }
 
-    return "Obese"
+  if (bmi < 27.5) {
+    return "Overweight";
+  }
+
+  return "Obese";
+};
+
+try {
+  const args = getNumberArgs(undefined, 2);
+  console.log(calculateBmi({ height: args[0], mass: args[1] }));
+} catch (e: unknown) {
+  if (e instanceof Error) {
+    console.error(e.message);
+  }
 }
-
-console.log(calculateBmi(180, 74))
