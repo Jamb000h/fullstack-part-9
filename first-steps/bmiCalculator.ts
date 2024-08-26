@@ -3,11 +3,11 @@ import { getNumberArgs } from "./utils";
 type BMIResult = "Underweight" | "Normal range" | "Overweight" | "Obese";
 type BMIArgs = {
   height: number;
-  mass: number;
+  weight: number;
 };
 
-const calculateBmi = ({ height, mass }: BMIArgs): BMIResult => {
-  const bmi = mass / Math.pow(height / 100, 2);
+export const calculateBmi = ({ height, weight }: BMIArgs): BMIResult => {
+  const bmi = weight / Math.pow(height / 100, 2);
 
   if (bmi < 18.5) {
     return "Underweight";
@@ -24,11 +24,13 @@ const calculateBmi = ({ height, mass }: BMIArgs): BMIResult => {
   return "Obese";
 };
 
-try {
-  const args = getNumberArgs(undefined, 2);
-  console.log(calculateBmi({ height: args[0], mass: args[1] }));
-} catch (e: unknown) {
-  if (e instanceof Error) {
-    console.error(e.message);
+if (require.main === module) {
+  try {
+    const args = getNumberArgs(undefined, 2);
+    console.log(calculateBmi({ height: args[0], weight: args[1] }));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      console.error(e.message);
+    }
   }
 }
