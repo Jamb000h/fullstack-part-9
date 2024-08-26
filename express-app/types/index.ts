@@ -13,4 +13,6 @@ export type Patient = {
   occupation: string;
 };
 
-export type NonSensitivePatient = Omit<Patient, "ssn">;
+export type NonSensitivePatient = Pick<Patient, "id" | "name" | "dateOfBirth" | "gender" | "occupation">;
+
+export type NewPatient = Omit<Patient, "id">;
