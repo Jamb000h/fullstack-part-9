@@ -8,8 +8,8 @@ interface ContentProps {
 export const Content = ({ entries }: ContentProps) => {
   return (
     <>
-      {entries.map((entry) => (
-        <Entry entry={entry} />
+      {entries.map((entry, i) => (
+        <Entry entry={entry} key={i}/>
       ))}
     </>
   );
