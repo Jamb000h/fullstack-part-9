@@ -1,4 +1,4 @@
-import { CoursePart } from "../App";
+import { CoursePart } from "../data/courseParts";
 
 interface TotalProps {
   courseParts: CoursePart[];
