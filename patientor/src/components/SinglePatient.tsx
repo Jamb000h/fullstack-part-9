@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Patient } from "../types";
+import { Diagnosis, Patient } from "../types";
 
 import patientService from "../services/patients";
 
-const SinglePatient = () => {
+interface SinglePatientProps {
+  diagnoses: Diagnosis[]
+}
+
+const SinglePatient = ({diagnoses}: SinglePatientProps) => {
   const [patient, setPatient] = useState<Patient>();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchPatient = async () => {
-      console.log("MORO");
       if (id) {
         const newPatient = await patientService.get(id);
         setPatient(newPatient);
@@ -39,7 +42,7 @@ const SinglePatient = () => {
                 {entry.date} <i>{entry.description}</i>
                 <ul>
                   {entry.diagnosisCodes?.map((diagnosisCode) => (
-                    <li key={diagnosisCode}>{diagnosisCode}</li>
+                    <li key={diagnosisCode}>{diagnosisCode} {diagnoses.find(diagnosis => diagnosis.code === diagnosisCode)?.name}</li>
                   ))}
                 </ul>
               </div>
