@@ -1,7 +1,41 @@
-import { Gender } from "../enums";
+import { Gender, HealthCheckRating } from "../enums";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Entry {}
+
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<Diagnosis["code"]>;
+}
+
+interface HealthCheckEntry extends BaseEntry {
+  type: "HealthCheck";
+  healthCheckRating: HealthCheckRating;
+}
+
+interface OccupationalHealthcareEntry extends BaseEntry {
+  type: "OccupationalHealthcare";
+  employerName: string;
+  sickLeave?: {
+    startDate: string;
+    endDate: string;
+  }
+}
+
+interface HospitalEntry extends BaseEntry {
+  type: "Hospital";
+  discharge: {
+    date: string;
+    criteria: string;
+  }
+}
+
+export type Entry =
+  | HospitalEntry
+  | OccupationalHealthcareEntry
+  | HealthCheckEntry;
+
 
 export type Diagnosis = {
   code: string;
@@ -23,5 +57,3 @@ export type NonSensitivePatient = Pick<
   Patient,
   "id" | "name" | "dateOfBirth" | "gender" | "occupation"
 >;
-
-export type NewPatient = Omit<Patient, "id" | "entries">;
