@@ -1,5 +1,8 @@
 import { Gender } from "../enums";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface Entry {}
+
 export type Diagnosis = {
   code: string;
   name: string;
@@ -13,8 +16,12 @@ export type Patient = {
   ssn: string;
   gender: Gender;
   occupation: string;
+  entries: Entry[];
 };
 
-export type NonSensitivePatient = Pick<Patient, "id" | "name" | "dateOfBirth" | "gender" | "occupation">;
+export type NonSensitivePatient = Pick<
+  Patient,
+  "id" | "name" | "dateOfBirth" | "gender" | "occupation"
+>;
 
-export type NewPatient = Omit<Patient, "id">;
+export type NewPatient = Omit<Patient, "id" | "entries">;

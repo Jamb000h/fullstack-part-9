@@ -17,6 +17,7 @@ export const toNewPatient = (object: unknown): Patient => {
   const newEntry: Patient = {
     ...newPatient,
     id: uuid(),
+    entries: []
   };
 
   return newEntry;

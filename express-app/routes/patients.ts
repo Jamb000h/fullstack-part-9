@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getNonSensitivePatients,
+  getSensitivePatient,
   addPatient,
 } from "../services/patientService";
 import { toNewPatient } from "../utils";
@@ -10,6 +11,17 @@ const router = express.Router();
 
 router.get("/", (_req, res) => {
   res.send(getNonSensitivePatients());
+});
+
+router.get("/:id", (req, res) => {
+  try {
+
+    res.send(getSensitivePatient(req.params.id));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      res.status(404).send(e.message);
+    }
+  }
 });
 
 router.post("/", (req, res) => {
